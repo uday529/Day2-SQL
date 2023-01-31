@@ -1,0 +1,134 @@
+create a Default constraint for category column as admin
+
+use rough_Db;
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    Category varchar(50)  DEFAULT 'Admin'
+);
+insert into Orders(OrderID,OrderNumber) values('1','25');            
+insert into Orders(OrderID,OrderNumber,Category) values('34','105','HI');   
+
+
+--alter table Orders add constraint--
+
+Alter table Users Add constraint Category default 'Admin' for Category
+
+INSERT into Users(Username,Password,FullName,IsActive)values('Uday','Uday@529','Udaykumar',1);
+
+-----check Constraint----
+
+CREATE TABLE employee (
+    ID int NOT NULL,
+    Salary int,
+    CHECK (Salary>=15000)
+);
+
+insert into ordered (ID,Salary) values ('1','20000');
+insert into ordered (ID,Salary) values ('2','10000');
+
+
+
+from   --Filtering--
+= is used for 1 row comparrision only
+select * from all_Transactions where productId ='1' or productId ='3';
+---More conditions are required then more num of or are required---
+
+we go for in operator    it is row comparision udergoes
+Select * from all_Transcations where productId in (1,2,3,4,5);
+
+Not in
+Select * from all_Transcations where productId not in (1,2,3,4,5);
+
+----start with the letter----
+select * from Users where userName like 'D';             no error but no value displays
+select * from Users where userName like 'D%';            Displays the name start with 'D'
+select * from Users where userName like '_a%';           Displays the second letter with 'a' 
+select * from Users where userName like '%a';            displays the last letter name with letter 'a'
+select * from Users where usermail like '%gmail.com';
+select * from Users where usermail like '%gmail%'; 
+
+--Functions in SQL--
+Aggregate Functions:
+--Max--
+--Min--
+--Sum--
+--Count--
+--Avg--
+
+select * from Product_Master;
+Select Max(AvailabileQty) from product_Master;  
+Select Min(AvailabileQty) from product_Master;
+Select Min(AvailabileQty) as Min_Qty from product_Master; 
+Select Sum(AvailabileQty) as Total_Qty from product_Master;
+select Count(*) as TotalCount from productMaster;           
+select Count(Availability) as TotalCount from Product_Master;
+SELECT AVG(AvailableQty) FROM Table_Name ;                   
+
+
+Adding email to the table:
+
+alter table users add email varchar(50);
+alter table users alter column email varchar(50) ;
+update users sets Email='';
+
+update users
+set email ='uday@gmail.com',category='Admin'
+where UserId='1';
+update users
+set email ='sai@gmail.com',category='Manager'
+where UserId='2';
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+--SQLQuery Questions--
+
+1.Write a query to display the id, entire street address and the first
+word of the street address of all entries in the location table. Give
+an alias to the first word as 'first_word'. Display the records sorted in 
+ ascending order based on first_word.
+
+select Id,street_address from location
+Order bY street_address;
+-------------------------------------------------------------------------------------------------------------------------------
+2.Write a query to display the names of all states belonging
+ to the country Canada. 
+Display the records sorted in ascending order based on state name.
+
+ select state from location where country_id='CA'
+ order by state;
+-------------------------------------------------------------------------------------------------------------------------------
+
+9.Write a query to display the names of all countries belonging to region
+ Europe. Display the records sorted in ascending order based on country name.
+
+ select name from countries where region_Id='1'
+ order by name;
+--------------------------------------------------------------------------------------------------------------------------------
+11.Write a query to display the first name and salary for all employees. Format
+ the salary to be 10 characters long, left-padded with the $ symbol. 
+Display the records sorted in ascending order based on first name.
+
+
+ SELECT first_name,'$$$$$'+ CONVERT(varchar(20), salary) as Salary FROM employee  order by Frist_Name ASC;
+--------------------------------------------------------------------------------------------------------------------------------
+
+13.	Write a query to display the first name and the last 5 characters of phone numbers 
+ of all employees. Display the records sorted in ascending order based on first name.
+ Give an alias to the last 5 characters of phone number as phone_number.
+
+SELECT first_name,LEFT(PhoneNumber,5) as 'phoneNumber' FROM Employee
+order by first_name ASC;
+
+--------------------------------------------------------------------------------------------------------------------------------
+Display the emloyee details whose age is > 25.
+Select first_name, datediff(YY,date_of_birth,getdate()) as age from employee
+
+--------------------------------------------------------------------------------------------------------------------------------
+14.Write a query to display the first name of the managers of HR department. 
+ Display the records sorted in ascending order based on manager name.
+
+select first_name from employee where department_id ='2'
+ORDER by first_name ASC;
